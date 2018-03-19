@@ -1,24 +1,39 @@
 <template>
   <div id="app">
-    <router-view/>
+   <transition name="fade" mode="out-in">
+      <router-view/>
+   </transition>
   </div>
 </template>
 
 <script>
+import store from './store';
 export default {
-  name: 'App'
+  name: 'App',
+  store
 }
 </script>
 
 <style>
 html, body{margin:0; padding:0; height:100%;}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  position:relative;
-  height:100%;
+   font-family: 'Avenir', Helvetica, Arial, sans-serif;
+   display:flex;
+   flex-direction:column;
+   justify-content:space-around;
+   align-items: center;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   text-align: center;
+   color: #2c3e50;
+   position:relative;
+   height:100%;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+  transition-duration:200ms;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
