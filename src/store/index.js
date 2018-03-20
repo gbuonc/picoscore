@@ -12,7 +12,9 @@ const store = new Vuex.Store({
       todos: [
          { id: 1, text: '...', done: true },
          { id: 2, text: '...', done: false }
-      ]
+      ],
+      // below this line starts seriuos shit...
+      jogAngle:0
    },
    getters: {
       doneTodos: state => {
@@ -20,6 +22,9 @@ const store = new Vuex.Store({
       }
    },
    mutations: {
+      updateJogAngle (state, payload){
+         state.jogAngle += payload.angle
+      },
       increment (state, payload) {
          state.count += payload.amount
       },

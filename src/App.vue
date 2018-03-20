@@ -17,6 +17,8 @@ export default {
 <style>
 html, body{margin:0; padding:0; height:100%;}
 #app {
+   max-width:700px;
+   margin: 0 auto;
    font-family: 'Avenir', Helvetica, Arial, sans-serif;
    display:flex;
    flex-direction:column;
@@ -28,6 +30,7 @@ html, body{margin:0; padding:0; height:100%;}
    color: #2c3e50;
    position:relative;
    height:100%;
+   overflow:hidden;
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
