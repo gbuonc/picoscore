@@ -8,12 +8,12 @@ const store = new Vuex.Store({
    strict: process.env.NODE_ENV !== 'production',
    state: {
       count: 1,
-      pending: 1123,
+      pending: false,
       todos: [
          { id: 1, text: '...', done: true },
          { id: 2, text: '...', done: false }
       ],
-      // below this line starts seriuos shit...
+      // below this line starts serious shit...
       jogAngle:0
    },
    getters: {

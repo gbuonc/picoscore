@@ -11,7 +11,7 @@ Vue.use(Router)
 const routes = [
    // { path: '/home', component: Home, name:'hp'},
    { path: '/', component: Home, name:'landing'},
-   { path: '/new', component: New, name:'new' },
+   { path: '/new', component: New, name:'new'},
    { path: '/edit/:scoreId', component: Edit, name:'edit' },
    { path: '/play/:scoreId', component: Play },
    { path: '*', component: NotFound },
@@ -32,7 +32,7 @@ router.beforeEach((to, from, next) => {
       }else{
          // if no pending scores, create a new one
          next({
-            path: '/new',
+            path: '/new'
          })
       }
    }else{

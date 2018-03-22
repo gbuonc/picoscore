@@ -4,6 +4,9 @@
       <div>
          <MainScore />
       </div>
+      <div>
+         <Editor />
+      </div>
       <div class="center">
          <p>{{counter}}</p>
          <MidiPlayer />
@@ -20,6 +23,7 @@ import abcjs from 'abcjs/midi';
 import Dial from '../components/Dial';
 import MainScore from '../components/MainScore';
 import MidiPlayer from '../components/MidiPlayer';
+import Editor from '../components/Editor';
 import { mapState } from 'vuex';
 export default {
    name: 'New',
@@ -28,15 +32,20 @@ export default {
          scoreId:1,
       }
    },
+   props:['config'],
    computed:{
       ...mapState({
          counter: 'jogAngle'
       })
    },
+   directives:{
+      
+   },
    components: {
       'Dial': Dial,
       'MainScore': MainScore,
-      'MidiPlayer': MidiPlayer
+      'MidiPlayer': MidiPlayer,
+      'Editor':Editor
    }
 }
 </script>

@@ -37,20 +37,6 @@ export default {
                   }
                }, 150)
             }, false);
-            // if(dist < 0){
-            //    count >= scoreConfigLength ? count-=friction : scoreConfigLength;
-            // }
-            // if(dist > 0){
-            //    count+=friction;
-            // }
-            // e.detail.distanceFromOrigin, e.detail.distanceFromLast, e.detail.angle
-            // scoreTextArea.setSelectionRange(count,count+1);
-            // console.log(scoreTextArea.value.charAt(count));
-            // detailTextArea.value=scoreTextArea.value.charAt(count);
-            // detail_editor.fireChanged();
-            // abc_editor.updateSelection();
-            //    el.style.transform='rotate('+(e.detail.distanceFromOrigin)+'deg)';
-            //    angle = e.detail.angle.toFixed(1);
          }
       }
    }

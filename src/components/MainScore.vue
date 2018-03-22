@@ -19,7 +19,7 @@ L:1/8
 %C: Gianluca Buoncompagni
 K: C
 `
-const scoreNotes = `D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C)`;
+const scoreNotes = `C, D, E, F, G, A, B, C D E F G A B c d e f g a b c' d' e' f' g' a' b'`; //`D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C)`;
 let score = scoreConfig + scoreNotes;
 // -------------------------------------
 export default {
@@ -32,9 +32,8 @@ export default {
    
    computed:{
       noteIndex: function(){
-         console.log(scoreNotes);
-   //       scoreTextArea.value.charAt(count);
-   // detail_editor.fireChanged();
+         //       scoreTextArea.value.charAt(count);
+         // detail_editor.fireChanged();
          // abc_editor.updateSelection();
          return this.$store.state.jogAngle*1.5;
          return scoreNotes.charAt(this.$store.state.jogAngle*1.5);
@@ -45,7 +44,6 @@ export default {
       test: {
          update: function(el, bind){
             el.setSelectionRange(bind.value, bind.value+1);
-            console.log('UPDATE', el, bind.value)
          }
       }
    },
@@ -72,8 +70,6 @@ export default {
             add_classes:true,
             // svg config
             clickListener: function(abcElem, tuneNumber, classes){
-               console.log(this, abcElem, tuneNumber, classes);
-               console.log(score.substring(abcElem.startChar, abcElem.endChar));
             },
             // midi config
             program: 60, //trumpet
