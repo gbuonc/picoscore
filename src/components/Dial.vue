@@ -53,10 +53,10 @@ export default {
    }
    .jog{
       display:flex; 
-      width:30vw; 
-      height:30vw; 
-      min-width:300px;
-      min-height:300px;
+      width:10vw; 
+      height:10vw; 
+      min-width:200px;
+      min-height:200px;
       border-radius:50%; 
       justify-content:center;
       align-items:flex-start; 
@@ -68,8 +68,8 @@ export default {
    }
    .inner-jog{
       background:#ccc; 
-      width:15vw; 
-      height:15vw; 
+      width:5vw; 
+      height:5vw; 
       border-radius:50%; 
       position:absolute;
    }

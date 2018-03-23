@@ -11,11 +11,16 @@
          <p>{{counter}}</p>
          <MidiPlayer />
       </div>
+      
       <div class="bottom">
          <router-link :to="{name: 'landing', params: { skipPendingRedirect: true }}">home</router-link>
+         
+      </div>
+      <div class="dial-wrap">
          <Dial />
       </div>
    </div>
+
 </template>
 
 <script>
@@ -56,5 +61,11 @@ export default {
    display:flex;
    flex-direction:column;
    justify-content: space-between;
+}
+.dial-wrap{
+   position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate3d(-50%, 50%,0);
 }
 </style>
