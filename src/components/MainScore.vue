@@ -3,7 +3,7 @@
       <div class="scroll-outer">
          <div id="score-wrapper" class="scroll-wrapper"></div>
       </div>
-      <textarea id="score-editor" :value="scoreContent" v-test="noteIndex"></textarea>
+      <textarea id="score-editor" :value="scoreNotes"></textarea>
    </div>
 </template>
 
@@ -12,41 +12,23 @@ import abcjs from 'abcjs/midi';
 import ScrollBooster from 'scrollbooster';
 import { mapState } from 'vuex';
 // -------------------------------------
-const scoreConfig = `X:100
+const scoreConfig = `X:1
 M:C
-Q:1/4=100
-L:1/8
-%C: Gianluca Buoncompagni
+Q:1/4=80
 K: C
 `
-const scoreNotes = `C, D, E, F, G, A, B, C D E F G A B c d e f g a b c' d' e' f' g' a' b'`; //`D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C) D*F D*C*F (A B C)`;
-let score = scoreConfig + scoreNotes;
 // -------------------------------------
 export default {
    name: 'MainScore',
    data () {
       return {
-         scoreContent: score,
+         scoreContent: scoreConfig+this.scoreNotes,
       }
    },
-   
-   computed:{
-      noteIndex: function(){
-         //       scoreTextArea.value.charAt(count);
-         // detail_editor.fireChanged();
-         // abc_editor.updateSelection();
-         return this.$store.state.jogAngle*1.5;
-         return scoreNotes.charAt(this.$store.state.jogAngle*1.5);
-      }
-   },
+   computed:{},
+   props:['scoreNotes'],
    methods:{},
-   directives:{
-      test: {
-         update: function(el, bind){
-            el.setSelectionRange(bind.value, bind.value+1);
-         }
-      }
-   },
+   directives:{},
    mounted: function(){
       var scrollRatio = 0;
       // SCROLLER 
@@ -62,7 +44,7 @@ export default {
             )`
          }
       })
-      var abc_editor = new abcjs.Editor("score-editor", {
+      this.abc_editor = new abcjs.Editor("score-editor", {
          paper_id: 'score-wrapper',
          generate_midi: true,
          midi_id: 'midi-wrapper',
@@ -110,12 +92,15 @@ export default {
             }
          }
       });
+   },
+   updated: function(a, b, c){
+      this.abc_editor.fireChanged();
    }
 }
 </script>
 
 <style scoped>
-   .score{outline:1px solid red; display:block; width:100%; position:relative;}
+   .score{display:block; width:100%; position:relative;}
    .score > div {width:100% !important; overflow:hidden;}
    .scroll-wrapper{text-align:left; }
    .score svg{display:block; width:100%;}

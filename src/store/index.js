@@ -14,7 +14,8 @@ const store = new Vuex.Store({
          { id: 2, text: '...', done: false }
       ],
       // below this line starts serious shit...
-      jogAngle:0
+      jogAngle:0,
+      scoreContent:'c2'
    },
    getters: {
       doneTodos: state => {
@@ -24,6 +25,10 @@ const store = new Vuex.Store({
    mutations: {
       updateJogAngle (state, payload){
          state.jogAngle += payload.angle
+      },
+      addNoteToScore (state, payload){
+         const out = state.scoreContent+payload.note;
+         state.scoreContent=state.scoreContent+payload.note
       },
       increment (state, payload) {
          state.count += payload.amount

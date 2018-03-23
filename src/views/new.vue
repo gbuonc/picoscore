@@ -2,25 +2,23 @@
 <template>
    <div class="panel">
       <div>
-         <MainScore />
+         <MainScore v-bind:scoreNotes="scoreContent"/>
+         <MidiPlayer />
       </div>
       <div>
          <Editor />
       </div>
       <div class="center">
-         <p>{{counter}}</p>
-         <MidiPlayer />
-      </div>
-      
-      <div class="bottom">
-         <router-link :to="{name: 'landing', params: { skipPendingRedirect: true }}">home</router-link>
          
       </div>
+      <div class="bottom">
+         <router-link :to="{name: 'landing', params: { skipPendingRedirect: true }}">home</router-link>
+      </div>
       <div class="dial-wrap">
+       <p>{{counter}}</p>
          <Dial />
       </div>
    </div>
-
 </template>
 
 <script>
@@ -40,7 +38,8 @@ export default {
    props:['config'],
    computed:{
       ...mapState({
-         counter: 'jogAngle'
+         counter: 'jogAngle',
+         scoreContent:'scoreContent'
       })
    },
    directives:{

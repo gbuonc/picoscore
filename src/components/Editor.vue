@@ -1,7 +1,7 @@
 <template>
    <div class="editor">
-      <div id="preview-wrapper"></div>
-      <textarea id="score-preview" :value="previewContent"></textarea>
+      <div id="preview-wrapper" v-show="showPreviewEditor"></div>
+      <textarea id="score-preview" :value="previewContent" v-fireChangeEvent="previewContent"></textarea>
       <vue-slider v-model="currentNoteIndex" 
          width="90%" 
          height="15"
@@ -10,6 +10,8 @@
          v-bind:dot-size="30"
          v-bind:piecewise="true"
          tooltip="hover"
+         @drag-start="showPreview"
+         @drag-end="hidePreview"
          >
       </vue-slider>
       <vue-slider v-model="currentDuration" 
@@ -20,11 +22,12 @@
          v-bind:dot-size="30"
          v-bind:piecewise="true"
          tooltip="hover"
+         @drag-start="showPreview"
+         @drag-end="hidePreview"
          >
       </vue-slider>
-      <p>{{currentDuration}}</p>
+      <button @click="addNoteToScore">Add</button>
    </div>
-   
 </template>
 
 <script>
@@ -38,19 +41,26 @@ export default {
    data () {
       return {
          currentNoteIndex:0,
-         currentDuration: Math.ceil(config.duration.length/2)
+         currentDuration: Math.ceil(config.duration.length/2),
+         scoreLine:'',
+         showPreviewEditor: false
       }
    },
    components:{
       vueSlider
    },
    computed:{
-      previewContent: function(a,b,c){
+      previewContent: function(vnode){
          const jogValue = Math.ceil(this.$store.state.jogAngle*0.03);
          const noteIndex = Math.ceil(this.currentNoteIndex); // Math.ceil(config.notes.length/2) + jogValue;
          const durationIndex = this.currentDuration;
-         if(a.abc_preview) a.abc_preview.fireChanged();
-         return config.notes[noteIndex]+config.duration[durationIndex]
+         this.scoreline = config.notes[noteIndex]+config.duration[durationIndex];
+         // -------------------------------------
+         let scoreConfig = `X:2
+         L:${config.defaultNoteLength}
+         ${this.scoreline}
+         `
+         return scoreConfig
       },
       notesLength: function(){
          return config.notes.length-1
@@ -59,8 +69,24 @@ export default {
          return config.duration.length-1
       }
    },
-   methods:{},
+   methods:{
+      addNoteToScore: function(){
+         this.$store.commit('addNoteToScore', {note:this.scoreline})
+      },
+      showPreview: function(){
+         this.showPreviewEditor = true;
+      },
+      hidePreview: function(){
+         this.showPreviewEditor = false;
+      }
+   },
    directives:{
+      fireChangeEvent:{
+         update: function(el,bind,vnode){
+            vnode.context.abc_preview.fireChanged();
+            //vnode.context.hidePreview();
+         }
+      }
    },
    mounted: function(){
       // bind abcjs to component instance so can be referenced in custom directive
@@ -69,20 +95,22 @@ export default {
          generate_midi: false,
          abcjsParams:{
             add_classes:true,
-            scale:3
+            scale:1
          }
       });
-      setInterval(()=>{
-         this.abc_preview.fireChanged()
-      }, 300)
+      
    }
 }
 </script>
 
 <style>
-   .editor{display:flex; justify-content:center; align-items:center; flex-direction:column;}
+   .editor{
+      display:flex; justify-content:center; align-items:center; flex-direction:column;
+      }
    .editor .abcjs-staff-extra{display:none;}
-   #preview-wrapper{text-align:center;}
+   #preview-wrapper{text-align:center; border:2px solid red;
+      position:fixed; top:0; right:0; width:100px !important}
    .editor .abcjs-note, .editor .abcjs-staff {fill:#000 !important;}
    input[type=range]{width:100%}
+   #score-preview{display:none;}
 </style>
