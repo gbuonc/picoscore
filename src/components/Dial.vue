@@ -1,6 +1,6 @@
 <template>
    <div v-onRotate id="rotateWrapper" class="jog-wrapper">
-      <div class="jog"></div>
+      <div class="jog">{{jogValue}}</div>
       <div class="inner-jog"></div>
    </div>
 </template>
@@ -9,16 +9,25 @@
 import ZingTouch from 'zingtouch';
 export default {
    name: 'Dial',
-   data () {
-      return {
-         msg: ''
+   data: function(el){
+      return{
+         jogValue: Math.floor((el.min+el.max)/2)
       }
    },
+   // computed:{
+   //    jogValue:function(el){
+   //       return Math.floor((el.min+el.max)/2);
+   //    }
+   // },
    methods:{
       updateJogAngle: function(dist){
-         this.$store.commit('updateJogAngle', {angle: dist})
+         // this.$store.commit('updateJogAngle', {angle: dist})
+         const updatedVal = this.jogValue+=dist;
+         console.log(this.jogValue);
+         
       }
    },
+   props:['min', 'max'],
    directives:{
       onRotate:{
          bind: function(el, bindings, vnode){
@@ -29,7 +38,15 @@ export default {
                // rotate jog
                el.style.transform='rotate('+(e.detail.distanceFromOrigin)+'deg)';
                angle = e.detail.angle.toFixed(1);
-               vnode.context.updateJogAngle(dist);
+               // vnode.context.updateJogAngle(dist);
+               const updatedVal = vnode.context.jogValue += dist;
+               if(updatedVal > this.max){
+                  vnode.context.jogValue = vnode.context.max;
+               }else if(updatedVal < this.max){
+                  vnode.context.jogValue = vnode.context.min;
+               }else{
+                  vnode.context.jogValue=updatedVal;
+               }
                setTimeout(function(){
                   if(e.detail.angle.toFixed(1) === angle && angle !== 0){
                      // reset rotation

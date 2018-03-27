@@ -1,14 +1,15 @@
 <template>
    <div class="editor">
       <div id="preview-wrapper" v-show="showPreviewEditor"></div>
+      <h3>{{pos}}</h3>
       <textarea id="score-preview" :value="previewContent" v-fireChangeEvent="previewContent"></textarea>
       <vue-slider v-model="currentNoteIndex" 
          width="90%" 
-         height="15"
+         height="25"
          v-bind:min="0"
          v-bind:max="notesLength"
-         v-bind:dot-size="30"
-         v-bind:piecewise="true"
+         v-bind:dot-size="15 "
+         v-bind:piecewise="false"
          tooltip="hover"
          @drag-start="showPreview"
          @drag-end="hidePreview"
@@ -49,11 +50,11 @@ export default {
    components:{
       vueSlider
    },
+   props:['pos'],
    computed:{
       previewContent: function(vnode){
-         const jogValue = Math.ceil(this.$store.state.jogAngle*0.03);
-         const noteIndex = Math.ceil(this.currentNoteIndex); // Math.ceil(config.notes.length/2) + jogValue;
-         const durationIndex = this.currentDuration;
+         const noteIndex = this.pos[1]; // Math.ceil(this.currentNoteIndex);
+         const durationIndex = this.pos[0]; // this.currentDuration;
          this.scoreline = config.notes[noteIndex]+config.duration[durationIndex];
          // -------------------------------------
          let scoreConfig = `X:2
@@ -84,11 +85,11 @@ export default {
       fireChangeEvent:{
          update: function(el,bind,vnode){
             vnode.context.abc_preview.fireChanged();
-            //vnode.context.hidePreview();
+            vnode.context.hidePreview();
          }
       }
    },
-   mounted: function(){
+   mounted: function(el,bind,vnode){
       // bind abcjs to component instance so can be referenced in custom directive
       this.abc_preview = new abcjs.Editor("score-preview", {
          paper_id: 'preview-wrapper',
@@ -98,6 +99,10 @@ export default {
             scale:1
          }
       });
+      // setInterval(()=>{
+      //    this.currentNoteIndex +=1;
+      //    this.abc_preview.fireChanged();
+      // }, 350)
       
    }
 }
@@ -108,8 +113,17 @@ export default {
       display:flex; justify-content:center; align-items:center; flex-direction:column;
       }
    .editor .abcjs-staff-extra{display:none;}
-   #preview-wrapper{text-align:center; border:2px solid red;
-      position:fixed; top:0; right:0; width:100px !important}
+   #preview-wrapper{text-align: center;
+    /* border: 2px solid red; */
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    width: 100px !important;
+    transform: translate(50%, -130%);
+    z-index: 10;
+    background: aliceblue;
+    border-radius: 4px;
+    box-shadow: 1px 3px 10px -5px #000;}
    .editor .abcjs-note, .editor .abcjs-staff {fill:#000 !important;}
    input[type=range]{width:100%}
    #score-preview{display:none;}

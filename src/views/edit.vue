@@ -4,8 +4,6 @@
       <h1>{{title2}} {{counter}}</h1>
       <p>{{ $route.params.scoreId }}</p>
       <p>{{toDos}}</p>
-      <div @click="async">Add to counter</div>
-      <div @click="decrementCounter">Remove from counter</div>
       <router-link :to="{name: 'landing', params: { skipPendingRedirect: true }}">home</router-link>
    </div>
 </template>
@@ -31,15 +29,15 @@ export default {
       })
    },
    methods:{
-      incrementCounter : function(){
-         this.$store.commit('increment', {amount:10})
-      },
-      decrementCounter: function(){
-         this.$store.commit('decrement', {amount:1})
-      },
-      async: function(){
-         this.$store.dispatch('incrementAsync', {amount:1} )
-      }
+      // incrementCounter : function(){
+      //    this.$store.commit('increment', {amount:10})
+      // },
+      // decrementCounter: function(){
+      //    this.$store.commit('decrement', {amount:1})
+      // },
+      // async: function(){
+      //    this.$store.dispatch('incrementAsync', {amount:1} )
+      // }
    }
    
 }

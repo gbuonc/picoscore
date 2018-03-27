@@ -25,10 +25,7 @@ export default {
          scoreContent: scoreConfig+this.scoreNotes,
       }
    },
-   computed:{},
    props:['scoreNotes'],
-   methods:{},
-   directives:{},
    mounted: function(){
       var scrollRatio = 0;
       // SCROLLER 
@@ -54,8 +51,8 @@ export default {
             clickListener: function(abcElem, tuneNumber, classes){
             },
             // midi config
-            program: 60, //trumpet
-            midiTranspose: -2,
+            program: 1, // 60, //trumpet
+            // midiTranspose: -2,
             inlineControls: {
                hide: true,
             },
@@ -104,4 +101,5 @@ export default {
    .score > div {width:100% !important; overflow:hidden;}
    .scroll-wrapper{text-align:left; }
    .score svg{display:block; width:100%;}
+   #score-editor{display:none;}
 </style>

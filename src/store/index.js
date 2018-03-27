@@ -7,15 +7,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
    strict: process.env.NODE_ENV !== 'production',
    state: {
-      count: 1,
-      pending: false,
-      todos: [
-         { id: 1, text: '...', done: true },
-         { id: 2, text: '...', done: false }
-      ],
-      // below this line starts serious shit...
       jogAngle:0,
-      scoreContent:'c2'
+      scoreContent:'|'
    },
    getters: {
       doneTodos: state => {
@@ -30,19 +23,13 @@ const store = new Vuex.Store({
          const out = state.scoreContent+payload.note;
          state.scoreContent=state.scoreContent+payload.note
       },
-      increment (state, payload) {
-         state.count += payload.amount
-      },
-      decrement (state, payload) {
-         state.count -= payload.amount
-      }
    },
    actions: {
-      incrementAsync (context, payload) {
-         setTimeout(() => {
-            context.commit('increment', payload)
-         }, 300)
-      }
+      // incrementAsync (context, payload) {
+      //    setTimeout(() => {
+      //       context.commit('increment', payload)
+      //    }, 300)
+      // }
    }
 })
 export default store
