@@ -1,18 +1,18 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
    strict: process.env.NODE_ENV !== 'production',
    state: {
-      jogAngle:0,
-      scoreContent:'|'
+      // jogAngle:0,
+      melodyArray:['|','a',' ','b','c']
    },
    getters: {
-      doneTodos: state => {
-         return state.todos.filter(todo => todo.done)
+      scoreContent: state =>{
+         return state.melodyArray.join(''); // convert array to string to use with notation libs
       }
    },
    mutations: {
@@ -20,16 +20,8 @@ const store = new Vuex.Store({
          state.jogAngle += payload.angle
       },
       addNoteToScore (state, payload){
-         const out = state.scoreContent+payload.note;
-         state.scoreContent=state.scoreContent+payload.note
+         state.melodyArray.push(payload.note);
       },
-   },
-   actions: {
-      // incrementAsync (context, payload) {
-      //    setTimeout(() => {
-      //       context.commit('increment', payload)
-      //    }, 300)
-      // }
    }
 })
 export default store

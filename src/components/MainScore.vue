@@ -4,13 +4,13 @@
          <div id="score-wrapper" class="scroll-wrapper"></div>
       </div>
       <textarea id="score-editor" :value="scoreNotes"></textarea>
+      <p>{{scoreNotes}}</p>
    </div>
 </template>
 
 <script>
 import abcjs from 'abcjs/midi';
 import ScrollBooster from 'scrollbooster';
-import { mapState } from 'vuex';
 // -------------------------------------
 const scoreConfig = `X:1
 M:C
@@ -20,15 +20,10 @@ K: C
 // -------------------------------------
 export default {
    name: 'MainScore',
-   data () {
-      return {
-         scoreContent: scoreConfig+this.scoreNotes,
-      }
-   },
    props:['scoreNotes'],
    mounted: function(){
       var scrollRatio = 0;
-      // SCROLLER 
+      // scrollbooster scroller 
       let sb = new ScrollBooster({
          viewport: document.querySelector('.scroll-outer'),
          content: document.querySelector('#score-wrapper'),
@@ -41,15 +36,14 @@ export default {
             )`
          }
       })
+      // abc editor
       this.abc_editor = new abcjs.Editor("score-editor", {
          paper_id: 'score-wrapper',
          generate_midi: true,
          midi_id: 'midi-wrapper',
          abcjsParams:{
             add_classes:true,
-            // svg config
-            clickListener: function(abcElem, tuneNumber, classes){
-            },
+            clickListener: function(abcElem, tuneNumber, classes){},
             // midi config
             program: 1, // 60, //trumpet
             // midiTranspose: -2,
@@ -95,9 +89,8 @@ export default {
    }
 }
 </script>
-
 <style scoped>
-   .score{display:block; width:100%; position:relative;}
+   .score{display:block; width:100%; position:relative; background:#efefef;}
    .score > div {width:100% !important; overflow:hidden;}
    .scroll-wrapper{text-align:left; }
    .score svg{display:block; width:100%;}

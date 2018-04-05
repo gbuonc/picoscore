@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "abcjs": "^4.0.0",
+    "dragula": "^3.7.2",
     "scrollbooster": "^1.0.3",
+    "vexflow": "^1.2.84",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",

@@ -13,14 +13,13 @@ const routes = [
    { path: '/', component: Home, name:'landing'},
    { path: '/new', component: New, name:'new'},
    { path: '/edit/:scoreId', component: Edit, name:'edit' },
-   { path: '/play/:scoreId', component: Play },
+   //{ path: '/play/:scoreId', component: Play },
    { path: '*', component: NotFound },
 ]
 const router = new Router({
    mode: 'history',
    routes
 })
-
 router.beforeEach((to, from, next) => {
    // REDIRECT ON APP FIRST LOAD
    if(to.name === 'landing' && !to.params.skipPendingRedirect){

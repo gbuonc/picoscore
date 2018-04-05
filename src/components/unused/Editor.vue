@@ -99,11 +99,37 @@ export default {
             scale:1
          }
       });
-      // setInterval(()=>{
-      //    this.currentNoteIndex +=1;
-      //    this.abc_preview.fireChanged();
-      // }, 350)
-      
+
+      // THIS BLOCK WAS IN NEW.VUE _______________________________________
+      // Register touchstart and touchend listeners for element 'source'
+      // var src = document.getElementById("test");
+      // var target = src.getBoundingClientRect();
+      // const areaWidth = target.width;
+      // const areaHeight = target.height;
+      // const topPos = target.y;
+      // const leftPos = target.x;
+      // var clientX, clientY;
+      // const component = this;
+
+      // src.addEventListener('touchmove', function(e) {
+      //    // Cache the client X/Y coordinates
+      //    clientX = e.touches[0].clientX;
+      //    clientY = e.touches[0].clientY;
+      //    const horizontalPos = parseInt((((clientX-leftPos)/areaWidth)*config.duration.length), 10);
+      //    const verticalPos= parseInt((((clientY-topPos)/areaHeight)*config.notes.length),10); //parseInt(((clientY-topPos)).toFixed(2), 10);
+      //    if(horizontalPos >=0 && horizontalPos<=config.duration.length){
+      //       component.xpos = horizontalPos;
+      //    }
+      //    if(verticalPos >=0 && verticalPos<=config.notes.length){
+      //       component.ypos = verticalPos;
+      //    }
+         
+      // }, false);
+
+      // src.addEventListener('touchend', function(e) {
+      //    // SAVE on touchend
+      // }, false);
+      // ___________________________________________________________________
    }
 }
 </script>
