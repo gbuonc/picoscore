@@ -2,7 +2,7 @@
    <div class="midi-player">
       <div id="midi-wrapper"></div>
       <span class="btn-play" @click="playScore"><strong>PLAY</strong></span> | 
-      <span class="btn-stop" @click="stopPlaying">STOP</span>
+      <span class="btn-stop" @click="stopPlaying">STOP</span> 
    </div>
 </template>
 

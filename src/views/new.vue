@@ -26,7 +26,7 @@ export default {
       }
    },
    computed:{
-      scoreContent:(component) => component.$store.getters.scoreContent,
+      scoreContent:(component) => component.$store.getters.scoreContent
    }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
    <div>
+   {{currentPitch}}
       <div class="dropStave">
          <div class="line sopralinea droplet" data-value="E4"></div>
          <div class="space droplet" data-value="D4"></div>
@@ -42,6 +43,11 @@ import dragula from 'dragula';
 import config from '../config.js';
 export default {
    name: 'DropStave',
+   data: function(){
+      return {
+         currentPitch : ''
+      }
+   },
    mounted: function(el,bind,vnode){
       // init drag/drop lib
       const staveLinesAndSpaces = document.querySelectorAll('.droplet');
@@ -53,10 +59,18 @@ export default {
          // compose notation
          const notePitch = config.pitch[dropItem.dataset.value].abcNotation;
          const noteDuration = config.durations[dragItem.dataset.duration].abcNotation;
-         const composition = ' '+notePitch + noteDuration+' ';
-         this.$store.commit('addNoteToScore', {note:composition});
+         const composite = ' '+notePitch + noteDuration+' ';
+         const now = Date.now();
+         this.$store.commit('addToScore', {
+            id:now,
+            type: 'note',
+            value:composite
+         });
          // remove dropped note
          dragItem.remove();
+      })
+      dragdropWrapper.on('over', (dragItem, dropItem)=>{
+         this.currentPitch = dropItem.dataset.value;
       })
    }
 }
@@ -64,16 +78,28 @@ export default {
 
 <style scoped>
    body > .item{display:none;}
+   .bucket{padding:2em;}
    .line, .space{
-      height:25px;
+      display:flex;
+      flex:1;
+      justify-content:center;
       width:100%;
+      min-height:10px;
       position:relative;
    }
-   .line{background:#efefef; height:3px}
+   .dropStave{
+      border:2px solid #ccc;
+      height: 240px;
+      display:flex;
+      flex-direction:column;
+      justify-content: stretch;
+      padding:10px;
+   }
+   /* .line{background:#efefef; height:3px} */
    .line:before{
       content:'';
       height:0;
-      border-bottom:1px solid #333;
+      border-bottom:2px solid #333;
       position:absolute;
       top:50%;
       left:0;
@@ -83,7 +109,16 @@ export default {
    .sopralinea:before{
       left:40%;
       right:40%;
+      border-bottom:1px solid #999;
    }
-   .item{background:red; width:24px; height:24px; border-radius:50%; display:inline-block;}
-   .line > .item, .space > .item{position:absolute; top:50%; transform:translate(-50%, -50%)}
+   .item{
+      background:red; 
+      width:24px; 
+      height:24px; 
+      border-radius:50%; 
+      display:inline-block;
+      transition: all 350ms ease-in-out;
+      z-index:2;
+   }
+   .line > .item, .space > .item{position:absolute; top:50%; transform:translate(-50%, -50%) scale(2);}
 </style>

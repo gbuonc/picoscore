@@ -4,7 +4,9 @@
          <div id="score-wrapper" class="scroll-wrapper"></div>
       </div>
       <textarea id="score-editor" :value="scoreNotes"></textarea>
-      <p>{{scoreNotes}}</p>
+      <!-- <p>{{scoreNotes}}</p>
+      <p>{{notesArray}}</p> -->
+      <span @click="clearScore">clear</span>
    </div>
 </template>
 
@@ -21,7 +23,12 @@ K: C
 export default {
    name: 'MainScore',
    props:['scoreNotes'],
-   mounted: function(){
+   computed:{
+      sourceArr:(component) => component.$store.state.melodyArray,
+      notesArray: (component) => component.$store.getters.notesInScore
+   },
+   mounted: function(a,b,c){
+      const component = this;
       var scrollRatio = 0;
       // scrollbooster scroller 
       let sb = new ScrollBooster({
@@ -43,7 +50,21 @@ export default {
          midi_id: 'midi-wrapper',
          abcjsParams:{
             add_classes:true,
-            clickListener: function(abcElem, tuneNumber, classes){},
+            clickListener: function(el, tuneNumber, classes, e){
+               if(el.el_type==='note'){
+                  // get note position via regex by checking node associated classes
+                  // class abcjs-n[xxx] where n is a note and [xxx] note position
+                  const regex = /abcjs-n\d+/;
+                  if(regex.exec(classes)){
+                     // split invariable part of classname to get actual number
+                     const notePosition = Number(regex.exec(classes)[0].split('abcjs-n')[1]);
+                     const noteId = component.notesArray[notePosition].id;
+                     if(noteId){
+                        component.$store.commit('editElement', {noteId});
+                     }
+                  }
+               }
+            },
             // midi config
             program: 1, // 60, //trumpet
             // midiTranspose: -2,
@@ -84,7 +105,12 @@ export default {
          }
       });
    },
-   updated: function(a, b, c){
+   methods:{
+      clearScore: function(){
+         this.$store.commit('clearScore');
+      }
+   },
+   updated: function(){
       this.abc_editor.fireChanged();
    }
 }
