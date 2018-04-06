@@ -2,38 +2,38 @@
    <div>
    {{currentPitch}}
       <div class="dropStave">
-         <div class="line sopralinea droplet" data-value="E4"></div>
-         <div class="space droplet" data-value="D4"></div>
-         <div class="line sopralinea droplet" data-value="C4"></div>
-         <div class="space droplet" data-value="B3"></div>
-         <div class="line sopralinea droplet" data-value="A3"></div>
+         <div class="line sopralinea droplet" data-value="e'"></div>
+         <div class="space droplet" data-value="d'"></div>
+         <div class="line sopralinea droplet" data-value="c'"></div>
+         <div class="space droplet" data-value="b"></div>
+         <div class="line sopralinea droplet" data-value="a"></div>
          <!-- ........ -->
-         <div class="space droplet" data-value="G3"></div>
-         <div class="line droplet" data-value="F3"></div>
-         <div class="space droplet" data-value="E3"></div>
-         <div class="line droplet" data-value="D3"></div>
-         <div class="space droplet" data-value="C3"></div>
-         <div class="line droplet" data-value="B2"></div>
-         <div class="space droplet" data-value="A2"></div>
-         <div class="line droplet" data-value="G2"></div>
-         <div class="space droplet" data-value="F2"></div>
-         <div class="line droplet" data-value="E2"></div>
-         <div class="space droplet" data-value="D2"></div>
+         <div class="space droplet" data-value="g"></div>
+         <div class="line droplet" data-value="f"></div>
+         <div class="space droplet" data-value="e"></div>
+         <div class="line droplet" data-value="d"></div>
+         <div class="space droplet" data-value="c"></div>
+         <div class="line droplet" data-value="B"></div>
+         <div class="space droplet" data-value="A"></div>
+         <div class="line droplet" data-value="G"></div>
+         <div class="space droplet" data-value="F"></div>
+         <div class="line droplet" data-value="E"></div>
+         <div class="space droplet" data-value="D"></div>
          <!-- ........ -->
-         <div class="line sottolinea droplet" data-value="C2"></div>
-         <div class="space droplet" data-value="B1"></div>
-         <div class="line sottolinea droplet" data-value="A1"></div>
-         <div class="space droplet" data-value="G1"></div>
-         <div class="line sottolinea droplet" data-value="F1"></div>
+         <div class="line sottolinea droplet" data-value="C"></div>
+         <div class="space droplet" data-value="B,"></div>
+         <div class="line sottolinea droplet" data-value="A,"></div>
+         <div class="space droplet" data-value="G,"></div>
+         <div class="line sottolinea droplet" data-value="F,"></div>
       </div>
       <div class="bucket">
-         <div class="item" data-duration="semibreve">sb</div>
-         <div class="item" data-duration="minima">m</div>
-         <div class="item" data-duration="semiminima">sm</div>
-         <div class="item" data-duration="croma">c</div>
-         <div class="item" data-duration="semicroma">sc</div>
-         <div class="item" data-duration="biscroma">b</div>
-         <div class="item" data-duration="semibiscroma">sb</div>
+         <div class="item" data-duration="8">sb</div>
+         <div class="item" data-duration="4">m</div>
+         <div class="item" data-duration="2">sm</div>
+         <div class="item" data-duration="">c</div>
+         <div class="item" data-duration="/2">sc</div>
+         <div class="item" data-duration="/4">b</div>
+         <div class="item" data-duration="/4">sb</div>
       </div>
    </div>
 </template>
@@ -57,9 +57,9 @@ export default {
       // set notes on drop
       dragdropWrapper.on('drop', (dragItem, dropItem)=>{
          // compose notation
-         const notePitch = config.pitch[dropItem.dataset.value].abcNotation;
-         const noteDuration = config.durations[dragItem.dataset.duration].abcNotation;
-         const composite = ' '+notePitch + noteDuration+' ';
+         const notePitch = dropItem.dataset.value; //config.pitch[dropItem.dataset.value].abcNotation;
+         const noteDuration = dragItem.dataset.duration // config.durations[dragItem.dataset.duration].abcNotation;
+         const composite = `${notePitch}${noteDuration}`;
          const now = Date.now();
          this.$store.commit('addToScore', {
             id:now,
